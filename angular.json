@@ -15,8 +15,11 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+              "customWebpackConfig": {
+              "path": "./custom-webpack.config.ts"
+            },
             "outputPath": "dist/angular-chrome-extension",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -27,12 +30,18 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "optimization": {
+              "styles": {
+                "inlineCritical": false
+              }
+            }
           },
           "configurations": {
             "production": {
@@ -48,7 +57,13 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "none"
             },
             "development": {
               "buildOptimizer": false,
