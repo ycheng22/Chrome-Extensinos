@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 const updateBackgroundColor = (color: string) => document.body.style.backgroundColor = color;
 
@@ -8,9 +8,19 @@ const updateBackgroundColor = (color: string) => document.body.style.backgroundC
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'angular-chrome-extension';
   color = '#ffffff';
+
+  ngOnInit(): void {
+    chrome.storage.sync.get('color', ({ color }) => {
+      this.color = color;
+    });
+  }
+
+  public updateColor(color: string) {
+    chrome.storage.sync.set({ color});
+  }
 
   public colorize() {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {

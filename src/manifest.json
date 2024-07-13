@@ -6,6 +6,7 @@
   "permissions": [
     "activeTab",
     "webNavigation",
+    "storage",
     "scripting"
   ],
   "background": {
