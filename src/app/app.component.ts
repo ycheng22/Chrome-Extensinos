@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   title = 'angular-chrome-extension';
   color = '#ffffff';
 
+  
   ngOnInit(): void {
     chrome.storage.sync.get('color', ({ color }) => {
       this.color = color;
